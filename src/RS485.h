@@ -32,10 +32,36 @@
 
 #define RS485_DEFAULT_DE_PIN 2
 #define RS485_DEFAULT_RE_PIN -1
+#elif ARDUINO_NANO_RP2040_CONNECT
+#define RS485_DEFAULT_DE_PIN A1
+#define RS485_DEFAULT_RE_PIN A0
+#elif ARDUINO_SAMD_ZERO
+#define RS485_DEFAULT_DE_PIN A4
+#define RS485_DEFAULT_RE_PIN A5
+#elif defined(ARDUINO_UNOR4_WIFI) || defined(ARDUINO_UNOR4_MINIMA)
+#define SERIAL_PORT_HARDWARE Serial1
+#define RS485_DEFAULT_DE_PIN 8
+#define RS485_DEFAULT_RE_PIN 7
+#elif defined(ESP32) || defined(ESP8266)
+#define RS485_DEFAULT_DE_PIN 12
+#define RS485_DEFAULT_RE_PIN 13
+
+#else
+#ifndef RS485_DEFAULT_DE_PIN
+#define RS485_DEFAULT_DE_PIN A6
+#define RS485_DEFAULT_RE_PIN A5
+#endif
+#endif
 
 
 #define RS485_DEFAULT_PRE_DELAY 50
 #define RS485_DEFAULT_POST_DELAY 50
+
+#if defined(ESP32) || defined(ESP8266)
+#define RS485_SER_CONF_TYPE SerialConfig
+#else
+#define RS485_SER_CONF_TYPE uint16_t
+#endif
 
 class RS485Class : public Stream {
   public:
@@ -45,9 +71,9 @@ class RS485Class : public Stream {
     RS485Class(HardwareSerial& hwSerial, int txPin, int dePin, int rePin);
 
     virtual void begin(unsigned long baudrate);
-    virtual void begin(unsigned long baudrate, uint16_t config);
+    virtual void begin(unsigned long baudrate, RS485_SER_CONF_TYPE config);
     virtual void begin(unsigned long baudrate, int predelay, int postdelay);
-    virtual void begin(unsigned long baudrate, uint16_t config, int predelay, int postdelay);
+    virtual void begin(unsigned long baudrate, RS485_SER_CONF_TYPE config, int predelay, int postdelay);
     virtual void end();
     virtual int available();
     virtual int peek();
@@ -79,7 +105,7 @@ class RS485Class : public Stream {
 
     bool _transmisionBegun;
     unsigned long _baudrate;
-    uint16_t _config;
+    RS485_SER_CONF_TYPE _config;
 };
 
 extern RS485Class RS485;
