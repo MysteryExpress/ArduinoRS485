@@ -80,7 +80,7 @@ void RS485Class::begin(unsigned long baudrate, RS485_SER_CONF_TYPE config, int p
   auto _opta_uart = static_cast<UART *>(_serial);
   _opta_uart->begin(baudrate, config, true);
 #else
-  _serial->begin(baudrate, config);
+  _serial->begin(baudrate, config,2,0);
 #endif 
 }
 

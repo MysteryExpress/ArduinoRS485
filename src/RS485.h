@@ -30,6 +30,7 @@
 #endif
 #endif
 
+#ifdef KUREWKA
 #define RS485_DEFAULT_DE_PIN 2
 #define RS485_DEFAULT_RE_PIN -1
 #elif ARDUINO_NANO_RP2040_CONNECT
@@ -45,7 +46,6 @@
 #elif defined(ESP32) || defined(ESP8266)
 #define RS485_DEFAULT_DE_PIN 12
 #define RS485_DEFAULT_RE_PIN 13
-
 #else
 #ifndef RS485_DEFAULT_DE_PIN
 #define RS485_DEFAULT_DE_PIN A6
