@@ -48,8 +48,8 @@
 #define RS485_DEFAULT_RE_PIN 13
 #else
 #ifndef RS485_DEFAULT_DE_PIN
-#define RS485_DEFAULT_DE_PIN A6
-#define RS485_DEFAULT_RE_PIN A5
+#define RS485_DEFAULT_DE_PIN 2
+#define RS485_DEFAULT_RE_PIN 2
 #endif
 #endif
 
